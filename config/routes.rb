@@ -7,11 +7,17 @@ Rails.application.routes.draw do
     registrations: 'customer/registrations'
   }
   root to: 'pages#home'
+
   # namespace :admin doとすることで、パスに"admin/"が付与される
   # "admin/products"を意味するようになる。
   # rails routes -g producs 参照のこと
   namespace :admin do
     resources :products, only: %i[index show new create edit update]
+  end
+
+  # scopeで囲むと、ファイル構成は"customer/"になるが、URLは"customer/"にならない
+  scope module: :customer do
+    resources :products, only: %i[index show]
   end
 
   get '/up/', to: 'up#index', as: :up
