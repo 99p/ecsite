@@ -15,9 +15,19 @@ Rails.application.routes.draw do
     resources :products, only: %i[index show new create edit update]
   end
 
-  # scopeで囲むと、ファイル構成は"customer/"になるが、URLは"customer/"にならない
+  # scope moduleで囲むと、ファイル構成は"customer/"になるが、URLは"customer/"にならない
+  # ファイル階層的にはcustomerだが、URLには出さない
   scope module: :customer do
     resources :products, only: %i[index show]
+    resources :cart_items, only: %i[index create destroy] do
+      # memberメソッドを使うとidが含まれているURLを扱えるようになります
+      # /cart_items/:id/increase(.:format) など
+      member do
+        # patch=一部修正 put=冪等(全上書き) post=新規作成
+        patch 'increase'
+        patch 'decrease'
+      end
+    end
   end
 
   get '/up/', to: 'up#index', as: :up
