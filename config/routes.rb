@@ -19,7 +19,9 @@ Rails.application.routes.draw do
   # ファイル階層的にはcustomerだが、URLには出さない
   scope module: :customer do
     resources :products, only: %i[index show]
+
     resources :cart_items, only: %i[index create destroy] do
+      # member do
       # memberメソッドを使うとidが含まれているURLを扱えるようになります
       # /cart_items/:id/increase(.:format) など
       member do
@@ -28,8 +30,18 @@ Rails.application.routes.draw do
         patch 'decrease'
       end
     end
+
     resources :checkouts, only: [:create]
     resources :webhooks, only: [:create]
+
+    resources :orders, only: %i[index show] do
+      # collection do
+      # member do と異なり、生成されるパスに:idが付与されない
+      # /orders/success というパスになる
+      collection do
+        get 'success'
+      end
+    end
   end
 
   get '/up/', to: 'up#index', as: :up

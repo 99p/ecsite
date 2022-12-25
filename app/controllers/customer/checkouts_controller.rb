@@ -32,8 +32,8 @@ class Customer::CheckoutsController < ApplicationController
           }
         }
       ],
-      success_url: root_url,
-      cancel_url: "#{root_url}/carts"
+      success_url: "#{root_url}orders/success",
+      cancel_url: "#{root_url}carts"
     )
   end
 end
