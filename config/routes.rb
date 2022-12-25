@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   # "admin/products"を意味するようになる。
   # rails routes -g producs 参照のこと
   namespace :admin do
+    root to: 'pages#home'
     resources :products, only: %i[index show new create edit update]
+    resources :orders, only: %i[show update]
   end
 
   # scope moduleで囲むと、ファイル構成は"customer/"になるが、URLは"customer/"にならない
