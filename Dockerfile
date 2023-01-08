@@ -36,7 +36,9 @@ ENV RAILS_ENV="${RAILS_ENV}" \
 COPY --chown=ruby:ruby . .
 
 RUN if [ "${RAILS_ENV}" != "development" ]; then \
-  SECRET_KEY_BASE=dummyvalue rails assets:precompile; fi
+  SECRET_KEY_BASE=dummyvalue rails assets:precompile; \
+  rails db:migrate; \
+  rails db:seed; fi
 
 CMD ["bash"]
 
