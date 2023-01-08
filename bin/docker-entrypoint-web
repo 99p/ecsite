@@ -22,6 +22,7 @@ if compgen -G "${manifest_files}" > /dev/null 2>&1; then
 fi
 
 bundle exec rails db:migrate
+bundle exec rails db:migrate:reset
 bundle exec rails db:seed
 
 exec "$@"
