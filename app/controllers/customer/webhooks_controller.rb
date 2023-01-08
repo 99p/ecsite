@@ -2,6 +2,7 @@ class Customer::WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
+    logger.debug('WebhooksController:createに入りました')
     payload = request.body.read
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
     endpoint_secret = Rails.application.credentials.dig(:stripe, :endpoint_secret)
@@ -21,6 +22,7 @@ class Customer::WebhooksController < ApplicationController
       return
     end
 
+    logger.debug('case文の前です')
     case event.type
     when 'checkout.session.completed'
       logger.debug('checkout.session.completedに入りました')
