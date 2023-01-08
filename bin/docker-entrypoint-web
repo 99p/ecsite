@@ -21,8 +21,8 @@ if compgen -G "${manifest_files}" > /dev/null 2>&1; then
     -delete
 fi
 
-bundle exec rails db:migrate
-DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:migrate:reset
-bundle exec rails db:seed
+# bundle exec rails db:migrate
+# DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:migrate:reset
+# bundle exec rails db:seed
 
 exec "$@"
