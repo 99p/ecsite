@@ -1,0 +1,21 @@
+databases:
+  - name: PostgreSQL
+    databaseName: ecsite_db
+    user: hello
+    region: oregon
+
+services:
+  - type: web
+    name: ECSite
+    env: ruby
+    region: oregon
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ecsite_db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
