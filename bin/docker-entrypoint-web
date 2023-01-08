@@ -10,7 +10,7 @@ cp -r /public /app
 # need to delete all of the old sprockets files except for the one that was
 # last built into the image. That's what the code below does.
 bundle exec rails db:migrate
-bundle exec rails db:seed
+# bundle exec rails db:seed
 
 # shellcheck disable=SC2125
 manifest_files=/app/public/assets/.sprockets-manifest-*.json
