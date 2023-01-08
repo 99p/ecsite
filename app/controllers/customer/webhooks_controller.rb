@@ -23,6 +23,7 @@ class Customer::WebhooksController < ApplicationController
 
     case event.type
     when 'checkout.session.completed'
+      logger.debug('checkout.session.completedに入りました')
       session = event.data.object
       customer = Customer.find(session.client_reference_id)
       return unless customer
@@ -37,6 +38,7 @@ class Customer::WebhooksController < ApplicationController
 
       customer.cart_items.destroy_all # 顧客のカート内商品を全て削除
       OrderMailer.complete(email: session.customer_details.email).deliver_later
+      logger.debug('checkout.session.completedの下の所です。')
       redirect_to session.success_url
     end
   end
